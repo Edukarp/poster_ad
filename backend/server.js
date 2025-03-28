@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Conexão com o MongoDB
-mongoose.connect("mongodb://localhost:27017/perguntas", {
+mongoose.connect("mongodb://localhost:27017/poster_ad", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
