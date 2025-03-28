@@ -8,6 +8,8 @@ const Home = () => {
 
   const handleInputChange = (event) => {
     setQuestion(event.target.value);
+    event.target.style.height = 'auto'; 
+    event.target.style.height = `${event.target.scrollHeight}px`; 
   };
 
   const handleSubmit = async (event) => {
@@ -17,7 +19,7 @@ const Home = () => {
         question,
       });
       setMessage(response.data.message);
-      setQuestion('');
+      setQuestion(''); 
     } catch (error) {
       setMessage('Erro ao salvar a pergunta.');
     }
@@ -27,12 +29,11 @@ const Home = () => {
     <div className="title">
       <h1>Bem-vindo</h1>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+        <textarea
           placeholder="Escreva sua pergunta aqui..."
           value={question}
           onChange={handleInputChange}
-          className="question-input"
+          className="question-textarea"
         />
         <button type="submit" className="submit-button">Enviar</button>
       </form>

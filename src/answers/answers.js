@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import './answers.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./answers.css";
 
 const Answers = () => {
   const [questions, setQuestions] = useState([]);
   const [editingId, setEditingId] = useState(null);
-  const [newAnswer, setNewAnswer] = useState('');
+  const [newAnswer, setNewAnswer] = useState("");
 
   // Função para buscar todas as perguntas
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/questions');
+        const response = await axios.get("http://localhost:5000/api/questions");
         setQuestions(response.data);
       } catch (error) {
-        console.error('Erro ao buscar as perguntas:', error);
+        console.error("Erro ao buscar as perguntas:", error);
       }
     };
 
@@ -24,19 +24,31 @@ const Answers = () => {
   // Função para atualizar a resposta
   const handleUpdateAnswer = async (id) => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/questions/${id}`, {
-        answer: newAnswer,
-      });
+      const response = await axios.put(
+        `http://localhost:5000/api/questions/${id}`,
+        {
+          answer: newAnswer,
+        }
+      );
       setQuestions((prevQuestions) =>
         prevQuestions.map((question) =>
-          question._id === id ? { ...question, answer: response.data.updatedQuestion.answer } : question
+          question._id === id
+            ? { ...question, answer: response.data.updatedQuestion.answer }
+            : question
         )
       );
       setEditingId(null);
-      setNewAnswer(''); 
+      setNewAnswer("");
     } catch (error) {
-      console.error('Erro ao atualizar a resposta:', error);
+      console.error("Erro ao atualizar a resposta:", error);
     }
+  };
+
+  // Função para ajustar o tamanho do textarea
+  const handleTextareaChange = (e) => {
+    setNewAnswer(e.target.value); //Setando a resposta 
+    e.target.style.height = "auto"; 
+    e.target.style.height = `${e.target.scrollHeight}px`; 
   };
 
   return (
@@ -46,25 +58,38 @@ const Answers = () => {
         {questions.map((question) => (
           <li key={question._id} className="question-item">
             <strong>Pergunta:</strong> {question.question} <br />
-            <strong>Resposta:</strong>{' '}
+            <strong>Resposta:</strong>{" "}
             {editingId === question._id ? (
               <div className="answer-box">
-                <input
-                  type="text"
+                <textarea
                   placeholder="Digite a resposta..."
                   value={newAnswer}
-                  onChange={(e) => setNewAnswer(e.target.value)}
+                  onChange={handleTextareaChange}
+                  className="textarea"
                 />
-                <button class="save-button" onClick={() => handleUpdateAnswer(question._id)}>Salvar</button>
-                <button class="cancel-button" onClick={() => setEditingId(null)}>Cancelar</button>
+                <button
+                  className="save-button"
+                  onClick={() => handleUpdateAnswer(question._id)}
+                >
+                  Salvar
+                </button>
+                <button
+                  className="cancel-button"
+                  onClick={() => setEditingId(null)}
+                >
+                  Cancelar
+                </button>
               </div>
             ) : (
               <>
-                {question.answer || 'Ainda não respondida'}
-                <button class="edit-button" onClick={() => {
-                  setEditingId(question._id);
-                  setNewAnswer(question.answer || '');
-                }}>
+                {question.answer || "Ainda não respondida"}
+                <button
+                  className="edit-button"
+                  onClick={() => {
+                    setEditingId(question._id);
+                    setNewAnswer(question.answer || "");
+                  }}
+                >
                   Editar
                 </button>
               </>
