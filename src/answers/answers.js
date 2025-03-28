@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./answers.css";
 
@@ -6,6 +6,7 @@ const Answers = () => {
   const [questions, setQuestions] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [newAnswer, setNewAnswer] = useState("");
+  const textareaRef = useRef(null); //Referência para o textarea
 
   // Função para buscar todas as perguntas
   useEffect(() => {
@@ -46,9 +47,23 @@ const Answers = () => {
 
   // Função para ajustar o tamanho do textarea
   const handleTextareaChange = (e) => {
-    setNewAnswer(e.target.value); //Setando a resposta 
+    setNewAnswer(e.target.value);
     e.target.style.height = "auto"; 
-    e.target.style.height = `${e.target.scrollHeight}px`; 
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
+  // Função para ativar o modo de edição e ajustar o tamanho do textarea
+  const handleEditClick = (id, currentAnswer) => {
+    setEditingId(id);
+    setNewAnswer(currentAnswer || "");
+
+    // Aguarda o textarea ser renderizado e ajusta sua altura
+    setTimeout(() => {
+      if (textareaRef.current) {
+        textareaRef.current.style.height = "auto"; // Reseta o tamanho
+        textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`; // Ajusta para o conteúdo
+      }
+    }, 0);
   };
 
   return (
@@ -57,43 +72,45 @@ const Answers = () => {
       <ul>
         {questions.map((question) => (
           <li key={question._id} className="question-item">
-            <strong>Pergunta:</strong> {question.question} <br />
-            <strong>Resposta:</strong>{" "}
-            {editingId === question._id ? (
-              <div className="answer-box">
-                <textarea
-                  placeholder="Digite a resposta..."
-                  value={newAnswer}
-                  onChange={handleTextareaChange}
-                  className="textarea"
-                />
-                <button
-                  className="save-button"
-                  onClick={() => handleUpdateAnswer(question._id)}
-                >
-                  Salvar
-                </button>
-                <button
-                  className="cancel-button"
-                  onClick={() => setEditingId(null)}
-                >
-                  Cancelar
-                </button>
-              </div>
-            ) : (
-              <>
-                {question.answer || "Ainda não respondida"}
-                <button
-                  className="edit-button"
-                  onClick={() => {
-                    setEditingId(question._id);
-                    setNewAnswer(question.answer || "");
-                  }}
-                >
-                  Editar
-                </button>
-              </>
-            )}
+            <div className="question-text">
+              <strong>Pergunta:</strong> {question.question} <br />
+            </div>
+            <div className="answer-text">
+              <strong>Resposta:</strong>{" "}
+              {editingId === question._id ? (
+                <div className="answer-box">
+                  <textarea
+                    ref={textareaRef} // Referência para o textarea
+                    placeholder="Digite a resposta..."
+                    value={newAnswer}
+                    onChange={handleTextareaChange}
+                    className="textarea"
+                  />
+                  <button
+                    className="save-button"
+                    onClick={() => handleUpdateAnswer(question._id)}
+                  >
+                    Salvar
+                  </button>
+                  <button
+                    className="cancel-button"
+                    onClick={() => setEditingId(null)}
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {question.answer || "Ainda não respondida"}
+                  <button
+                    className="edit-button"
+                    onClick={() => handleEditClick(question._id, question.answer)}
+                  >
+                    Editar
+                  </button>
+                </>
+              )}
+            </div>
           </li>
         ))}
       </ul>
