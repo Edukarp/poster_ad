@@ -6,23 +6,54 @@ html body {
   font-style: normal;
   font-size: 22px;
 }
+
 .background {
-  background-image: url("C:\Users\eduka\Desktop\Projetos\PosterAd\poster_ad\public\background_homepage.svg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -10;
-}
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    z-index: -10; 
+    overflow: hidden; 
+  }
+  
+  .background-image {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+  }
 
 .title {
   text-align: center;
   margin-top: 50px;
-  color: white;
+  color: #ededed;
+}
+
+.login-button-container {
+  position: absolute;
+  top: 50px;
+  right: 100px;
+  z-index: 10;
+}
+
+.login-button {
+  padding: 10px 20px;
+  background-color: #730e16;
+  color: #ededed;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #571319;
+}
+
+.login-icon {
+  margin-right: 5px;
+  margin-left: -5px;
 }
 
 .content-container {
@@ -141,15 +172,15 @@ html body {
   width: 20%;
   padding: 10px 20px;
   background-color: #730e16;
-  color: white;
+  color: #ededed;
   border: none;
   border-radius: 10px;
   cursor: pointer;
   font-size: 16px;
 }
 
-.submit-icon{
-    margin-left: 5px;
+.submit-icon {
+  margin-left: 5px;
 }
 
 .submit-button:hover {

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faUser } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,9 +35,16 @@ const Home = () => {
 
   return (
     <>
-      <div className="background"></div>
+      <div className="background">
+        <img
+          src="/background_homepage.svg"
+          alt="Background"
+          className="background-image"
+        />
+      </div>
       <div className="login-button-container">
         <button className="login-button" onClick={() => navigate("/login")}>
+          <FontAwesomeIcon className="login-icon" icon={faUser} size="sm" />
           Login
         </button>
       </div>
