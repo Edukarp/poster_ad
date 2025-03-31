@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
@@ -16,6 +17,7 @@ mongoose.connect("mongodb://localhost:27017/poster_ad", {
   useUnifiedTopology: true,
 });
 
+//Esquema pras perguntas
 const questionSchema = new mongoose.Schema(
   {
     question: { type: String, required: true },
@@ -73,5 +75,67 @@ app.put("/api/questions/:id", async (req, res) => {
       .json({ message: "Resposta atualizada com sucesso!", updatedQuestion });
   } catch (error) {
     res.status(500).json({ error: "Erro ao atualizar a resposta." });
+  }
+});
+
+// Esquema para usuários
+const userSchema = new mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+  },
+  { timestamps: true }
+);
+
+const User = mongoose.model("User", userSchema);
+
+// Rota para registrar um novo usuário
+app.post("/api/users", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  try {
+    // Verifica se o email já está registrado
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ error: "Email já registrado." });
+    }
+
+    // Cria um novo usuário
+    const newUser = new User({ name, email, password });
+    await newUser.save();
+    res.status(201).json({ message: "Usuário registrado com sucesso!" });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao registrar o usuário." });
+  }
+});
+
+// Rota para listar todos os usuários
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar os usuários." });
+  }
+});
+
+// Rota para login de usuário
+app.post("/api/users/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado." });
+    }
+
+    if (user.password !== password) {
+      return res.status(401).json({ error: "Senha incorreta." });
+    }
+
+    res.status(200).json({ message: "Login bem-sucedido!", user });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao fazer login." });
   }
 });
