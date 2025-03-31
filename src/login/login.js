@@ -33,6 +33,7 @@ const Login = () => {
         //Salva o token de autenticação no localStorage
         localStorage.setItem("authToken", response.data.user.token);
         navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.error("Erro ao fazer login:", error);

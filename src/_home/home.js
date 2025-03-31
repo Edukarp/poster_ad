@@ -41,7 +41,7 @@ const Home = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     setUserName(null);
-    redirect("/") 
+    window.location.reload();
   };
 
   const handleInputChange = (event) => {
