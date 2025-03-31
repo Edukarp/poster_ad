@@ -1,15 +1,47 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight, faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const navigate = useNavigate();
   const [question, setQuestion] = useState("");
   const [message, setMessage] = useState("");
+  const [userName, setUserName] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar a exibição do menu
   const textareaRef = useRef(null);
+
+  // Verifica se o usuário está logado e busca o nome dele
+  useEffect(() => {
+    const fetchUserName = async () => {
+      const token = localStorage.getItem("authToken");
+      if (token) {
+        try {
+          const response = await axios.get(
+            "http://localhost:5000/api/users/me",
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setUserName(response.data.name);
+        } catch (error) {
+          console.error("Erro ao buscar o usuário:", error);
+          localStorage.removeItem("authToken");
+        }
+      }
+    };
+
+    fetchUserName();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    setUserName(null); 
+  };
 
   const handleInputChange = (event) => {
     setQuestion(event.target.value);
@@ -26,7 +58,7 @@ const Home = () => {
       setMessage(response.data.message);
       setQuestion("");
       if (textareaRef.current) {
-        textareaRef.current.style.height = "40px"; //Resetar a altura para o padrão
+        textareaRef.current.style.height = "40px"; // Resetar a altura para o padrão
       }
     } catch (error) {
       setMessage("Erro ao salvar a pergunta.");
@@ -35,18 +67,46 @@ const Home = () => {
 
   return (
     <>
-      <div className="background">
-        <img
-          src="/background_homepage.svg"
-          alt="Background"
-          className="background-image"
-        />
+      <div className="background-container">
+        <div className="background">
+          <img
+            src="/background_homepage.svg"
+            alt="Background"
+            className="background-image"
+          />
+        </div>
       </div>
       <div className="login-button-container">
-        <button className="login-button" onClick={() => navigate("/login")}>
-          <FontAwesomeIcon className="login-icon" icon={faUser} size="sm" />
-          Login
-        </button>
+        {userName ? (
+          <div>
+            <p className="user-name">Bem-vindo, {userName}!</p>
+            <button
+              className="menu-toggle-button"
+              onClick={() => setMenuOpen(!menuOpen)} // Alterna o estado do menu
+            >
+              Menu
+              <FontAwesomeIcon className="menu-icon" icon={faCaretDown} size="sm" />
+            </button>
+            {menuOpen && (
+              <div className="menu-container">
+                <button
+                  className="menu-button"
+                  onClick={() => navigate("/answers")}
+                >
+                  Perguntas
+                </button>
+                <button className="menu-button" onClick={handleLogout}>
+                  Sair
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <button className="login-button" onClick={() => navigate("/login")}>
+            <FontAwesomeIcon className="login-icon" icon={faUser} size="sm" />
+            Login
+          </button>
+        )}
       </div>
       <div className="home-container">
         <div className="title">

@@ -26,7 +26,7 @@ const Login = () => {
         console.log("Usuário logado:", response.data);
 
         //Salva o token de autenticação no localStorage
-        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("authToken", response.data.user.token);
         navigate("/");
       }
     } catch (error) {

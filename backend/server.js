@@ -79,14 +79,12 @@ app.put("/api/questions/:id", async (req, res) => {
 });
 
 // Esquema para usuários
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-  },
-  { timestamps: true }
-);
+const userSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  token: { type: String },
+});
 
 const User = mongoose.model("User", userSchema);
 
@@ -120,6 +118,8 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
+const crypto = require("crypto");
+
 // Rota para login de usuário
 app.post("/api/users/login", async (req, res) => {
   const { email, password } = req.body;
@@ -134,8 +134,47 @@ app.post("/api/users/login", async (req, res) => {
       return res.status(401).json({ error: "Senha incorreta." });
     }
 
+    // Gera um token único usando o módulo crypto
+    const token = crypto.randomBytes(32).toString("hex");
+    user.token = token;
+    await user.save();
+
     res.status(200).json({ message: "Login bem-sucedido!", user });
   } catch (error) {
     res.status(500).json({ error: "Erro ao fazer login." });
+  }
+});
+
+// Middleware para autenticar o token
+const authenticateToken = async (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ error: "Token não fornecido" });
+  }
+
+  try {
+    // Busca o usuário pelo token no banco de dados
+    const user = await User.findOne({ token });
+    if (!user) {
+      return res.status(403).json({ error: "Token inválido" });
+    }
+
+    req.user = user; // Define o usuário no objeto `req`
+    next();
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao validar o token." });
+  }
+};
+
+
+// Rota para obter os dados do usuário logado
+app.get("/api/users/me", authenticateToken, async (req, res) => {
+  try {
+    const user = req.user;
+    res.json({ name: user.name, email: user.email });
+  } catch (error) {
+    res.status(500).json({ error: "Erro ao buscar o usuário." });
   }
 });

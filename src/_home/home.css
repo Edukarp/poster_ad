@@ -56,6 +56,54 @@ html body {
   margin-left: -5px;
 }
 
+.user-name {
+  color: #ededed;
+  font-size: 20px;
+  font-weight: 700; /* bold */
+  margin-right: 10px;
+}
+
+.menu-icon{
+  margin-left: 5px;
+}
+
+.menu-container {
+  margin-top: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-button {
+  background-color: #730e16;
+  color: #ededed;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.menu-button:hover {
+  background-color: #571319;
+}
+
+.menu-toggle-button {
+  padding: 10px 20px;
+  background-color: #730e16;
+  color: #ededed;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu-toggle-button:hover {
+  background-color: #571319;
+}
+
 .content-container {
   display: flex;
   align-items: center;
@@ -139,16 +187,16 @@ html body {
 }
 
 .question-textarea {
-  width: 50%; 
+  width: 50%;
   min-height: 40px;
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ededed;
   resize: none;
   overflow: hidden;
-  margin: 10px auto; 
+  margin: 10px auto;
   border-radius: 10px;
-  display: block; 
+  display: block;
 }
 .topic-question {
   color: #ededed;
