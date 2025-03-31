@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ const Home = () => {
   const [question, setQuestion] = useState("");
   const [message, setMessage] = useState("");
   const [userName, setUserName] = useState(null);
-  const [menuOpen, setMenuOpen] = useState(false); // Estado para controlar a exibição do menu
+  const [menuOpen, setMenuOpen] = useState(false);
   const textareaRef = useRef(null);
 
   // Verifica se o usuário está logado e busca o nome dele
@@ -40,7 +40,8 @@ const Home = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("authToken");
-    setUserName(null); 
+    setUserName(null);
+    redirect("/") 
   };
 
   const handleInputChange = (event) => {
@@ -76,7 +77,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="login-button-container">
+      <div className="login-home-button-container">
         {userName ? (
           <div>
             <p className="user-name">Bem-vindo, {userName}!</p>
@@ -102,7 +103,7 @@ const Home = () => {
             )}
           </div>
         ) : (
-          <button className="login-button" onClick={() => navigate("/login")}>
+          <button className="login-home-button" onClick={() => navigate("/login")}>
             <FontAwesomeIcon className="login-icon" icon={faUser} size="sm" />
             Login
           </button>

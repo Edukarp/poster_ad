@@ -29,14 +29,14 @@ html body {
   color: #ededed;
 }
 
-.login-button-container {
+.login-home-button-container {
   position: absolute;
   top: 50px;
   right: 100px;
   z-index: 10;
 }
 
-.login-button {
+.login-home-button {
   padding: 10px 20px;
   background-color: #730e16;
   color: #ededed;
@@ -47,7 +47,7 @@ html body {
   transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
+.login-home-button:hover {
   background-color: #571319;
 }
 
