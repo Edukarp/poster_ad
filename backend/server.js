@@ -12,7 +12,9 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Conexão com o MongoDB
-mongoose.connect("mongodb://localhost:27017/poster_ad", {
+require("dotenv").config();
+
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
