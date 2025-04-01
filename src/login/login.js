@@ -71,7 +71,7 @@ const Login = () => {
           <img
             src="/background_login.jpg"
             alt="Background"
-            className="background-image"
+            className="background-login-image"
           />
         </div>
       </div>

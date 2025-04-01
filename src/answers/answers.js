@@ -1,13 +1,19 @@
 /* eslint-disable */
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./answers.css";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse, faPencil } from "@fortawesome/free-solid-svg-icons";
 
 const Answers = () => {
   const [questions, setQuestions] = useState([]);
   const [editingId, setEditingId] = useState(null);
   const [newAnswer, setNewAnswer] = useState("");
   const textareaRef = useRef(null); //Referência para o textarea
+
+  const navigate = useNavigate();
 
   // Função para buscar todas as perguntas
   useEffect(() => {
@@ -49,7 +55,7 @@ const Answers = () => {
   // Função para ajustar o tamanho do textarea
   const handleTextareaChange = (e) => {
     setNewAnswer(e.target.value);
-    e.target.style.height = "auto"; 
+    e.target.style.height = "auto";
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
@@ -68,54 +74,86 @@ const Answers = () => {
   };
 
   return (
-    <div className="answers-container">
-      <h1>Lista de Perguntas</h1>
-      <ul>
-        {questions.map((question) => (
-          <li key={question._id} className="question-item">
-            <div className="question-text">
-              <strong>Pergunta:</strong> {question.question} <br />
-            </div>
-            <div className="answer-text">
-              <strong>Resposta:</strong>{" "}
-              {editingId === question._id ? (
-                <div className="answer-box">
-                  <textarea
-                    ref={textareaRef} // Referência para o textarea
-                    placeholder="Digite a resposta..."
-                    value={newAnswer}
-                    onChange={handleTextareaChange}
-                    className="textarea"
-                  />
-                  <button
-                    className="save-button"
-                    onClick={() => handleUpdateAnswer(question._id)}
-                  >
-                    Salvar
-                  </button>
-                  <button
-                    className="cancel-button"
-                    onClick={() => setEditingId(null)}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              ) : (
-                <>
-                  {question.answer || "Ainda não respondida"}
-                  <button
-                    className="edit-button"
-                    onClick={() => handleEditClick(question._id, question.answer)}
-                  >
-                    Editar
-                  </button>
-                </>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <>
+      <div className="background-questions-container">
+        <div className="background-questions">
+          <img
+            src="/background_questions.svg"
+            alt="Background"
+            className="background-questions-image"
+          />
+        </div>
+      </div>
+      <div className="question-home-button-container">
+        <button
+          className="question-home-button"
+          onClick={() => {
+            navigate("/");
+            window.location.reload();
+          }}
+        >
+          <FontAwesomeIcon className="home-icon" icon={faHouse} size="sm" />
+          Voltar
+        </button>
+      </div>
+      <div className="answers-container">
+        <h1 className="questions-title">Lista de Perguntas</h1>
+        <ul className="questions-list">
+          {questions.map((question) => (
+            <li key={question._id} className="question-item">
+              <div className="question-text">
+                <strong>Pergunta:</strong> {question.question} <br />
+              </div>
+              <div className="answer-text">
+                <strong>Resposta:</strong>{" "}
+                {editingId === question._id ? (
+                  <div className="answer-box">
+                    <textarea
+                      ref={textareaRef} // Referência para o textarea
+                      placeholder="Digite a resposta..."
+                      value={newAnswer}
+                      onChange={handleTextareaChange}
+                      className="answer-textarea"
+                    />
+                    <div className="button-question-container">
+                      <button
+                        className="save-button"
+                        onClick={() => handleUpdateAnswer(question._id)}
+                      >
+                        Salvar
+                      </button>
+                      <button
+                        className="cancel-button"
+                        onClick={() => setEditingId(null)}
+                      >
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="edit-container">
+                    {question.answer || "Ainda não respondida"}
+                    <button
+                      className="edit-button"
+                      onClick={() =>
+                        handleEditClick(question._id, question.answer)
+                      }
+                    >
+                      <FontAwesomeIcon
+                        className="edit-icon"
+                        icon={faPencil}
+                        size="sm"
+                      />
+                      Editar
+                    </button>
+                  </div>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </>
   );
 };
 

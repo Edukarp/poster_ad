@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight, faUser, faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRight,
+  faUser,
+  faCaretDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -86,13 +90,20 @@ const Home = () => {
               onClick={() => setMenuOpen(!menuOpen)} // Alterna o estado do menu
             >
               Menu
-              <FontAwesomeIcon className="menu-icon" icon={faCaretDown} size="sm" />
+              <FontAwesomeIcon
+                className="menu-icon"
+                icon={faCaretDown}
+                size="sm"
+              />
             </button>
             {menuOpen && (
               <div className="menu-container">
                 <button
                   className="menu-button"
-                  onClick={() => navigate("/answers")}
+                  onClick={() => {
+                    navigate("/answers");
+                    window.location.reload();
+                  }}
                 >
                   Perguntas
                 </button>
@@ -103,7 +114,10 @@ const Home = () => {
             )}
           </div>
         ) : (
-          <button className="login-home-button" onClick={() => navigate("/login")}>
+          <button
+            className="login-home-button"
+            onClick={() => navigate("/login")}
+          >
             <FontAwesomeIcon className="login-icon" icon={faUser} size="sm" />
             Login
           </button>
