@@ -4,7 +4,10 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "./login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightToBracket, faIdCard } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightToBracket,
+  faIdCard,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -44,11 +47,14 @@ const Login = () => {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("https://poster-adbackend.vercel.app/api/users", {
-        name,
-        email,
-        password: registerPassword,
-      });
+      const response = await axios.post(
+        "https://poster-adbackend.vercel.app/api/users",
+        {
+          name,
+          email,
+          password: registerPassword,
+        }
+      );
 
       if (response.status === 201) {
         alert("Usuário registrado com sucesso!");
@@ -77,87 +83,91 @@ const Login = () => {
       </div>
       <div className="auth-container">
         {/* Tela de Login */}
-        <div className="login-title">
-          <>Login</>
-          <FontAwesomeIcon
-            className="login-page-icon"
-            icon={faArrowRightToBracket}
-            size="sm"
-          />
-        </div>
         <div className="login-container">
-          <form onSubmit={handleLoginSubmit}>
-            <div className="form-group">
-              <label htmlFor="username">Email</label>
-              <input
-                type="text"
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Senha</label>
-              <input
-                type="password"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button className="login-button" type="submit">
-              Entrar
-            </button>
-          </form>
+          <div className="login-title">
+            <>Login</>
+            <FontAwesomeIcon
+              className="login-page-icon"
+              icon={faArrowRightToBracket}
+              size="sm"
+            />
+          </div>
+          <div className="login-block-container">
+            <form onSubmit={handleLoginSubmit}>
+              <div className="form-group">
+                <label htmlFor="username">Email</label>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Senha</label>
+                <input
+                  type="password"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button className="login-button" type="submit">
+                Entrar
+              </button>
+            </form>
+          </div>
         </div>
 
         {/* Tela de Registrar */}
-        <div className="register-title">
-          <>Registrar</>
-          <FontAwesomeIcon
-            className="register-page-icon"
-            icon={faIdCard}
-            size="sm"
-          />
-        </div>
         <div className="register-container">
-          <form onSubmit={handleRegisterSubmit}>
-            <div className="form-group">
-              <label htmlFor="name">Nome</label>
-              <input
-                type="text"
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="registerPassword">Senha</label>
-              <input
-                type="password"
-                id="registerPassword"
-                value={registerPassword}
-                onChange={(e) => setRegisterPassword(e.target.value)}
-                required
-              />
-            </div>
-            <button className="register-button" type="submit">
-              Registrar
-            </button>
-          </form>
+          <div className="register-title">
+            <>Registrar</>
+            <FontAwesomeIcon
+              className="register-page-icon"
+              icon={faIdCard}
+              size="sm"
+            />
+          </div>
+          <div className="register-block-container">
+            <form onSubmit={handleRegisterSubmit}>
+              <div className="form-group">
+                <label htmlFor="name">Nome</label>
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="registerPassword">Senha</label>
+                <input
+                  type="password"
+                  id="registerPassword"
+                  value={registerPassword}
+                  onChange={(e) => setRegisterPassword(e.target.value)}
+                  required
+                />
+              </div>
+              <button className="register-button" type="submit">
+                Registrar
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </>

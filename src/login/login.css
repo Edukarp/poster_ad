@@ -16,36 +16,14 @@
 
 .auth-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-  padding: 20px;
   box-sizing: border-box;
   height: 100vh;
 }
 
-.login-title {
+.login-title,
+.register-title {
   display: flex;
-  position: absolute;
-  top: 27%; 
-  left: 7%;
-  margin-left: 10px;
-  transform: translateX(-50%); 
-  color: #ededed;
-  background-color: #730e16; 
-  padding: 5px 20px;
-  border-radius: 4px;
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-.register-title{
-  display: flex;
-  position: absolute;
-  top: 21%; 
-  left: 59%;
-  margin-left: -10px;
-  transform: translateX(-50%); 
+  margin-left: -35%;
   color: #ededed;
   background-color: #730e16; 
   padding: 5px 20px;
@@ -62,18 +40,23 @@
 
 .login-container,
 .register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.login-block-container,
+.register-block-container {
   position: relative;
   width: 45%;
   background-color: #ededed;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.login-title,
-.register-title {
-  text-align: center;
-  margin-bottom: 20px;
+  padding: 5% 10%;
 }
 
 .form-group {
@@ -96,7 +79,6 @@ input {
 
 .login-button,
 .register-button {
-  width: 30%;
   margin-left: 35%;
   padding: 10px;
   font-size: 16px;
