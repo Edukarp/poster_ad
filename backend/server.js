@@ -9,6 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const corsOptions = {
+  origin: "https://poster-ad.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -16,6 +21,11 @@ app.use(bodyParser.json());
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+});
+
+//Rota padrão
+app.get("/", (req, res) => {
+  res.send("Backend funcionando!");
 });
 
 //Esquema pras perguntas
@@ -168,7 +178,6 @@ const authenticateToken = async (req, res, next) => {
     res.status(500).json({ error: "Erro ao validar o token." });
   }
 };
-
 
 // Rota para obter os dados do usuário logado
 app.get("/api/users/me", authenticateToken, async (req, res) => {
