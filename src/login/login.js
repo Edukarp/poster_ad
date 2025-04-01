@@ -19,7 +19,7 @@ const Login = () => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/users/login",
+        "https://poster-adbackend.vercel.app/api/users/login",
         {
           email: username,
           password,
@@ -44,7 +44,7 @@ const Login = () => {
   const handleRegisterSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/users", {
+      const response = await axios.post("https://poster-adbackend.vercel.app/api/users", {
         name,
         email,
         password: registerPassword,

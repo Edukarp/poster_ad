@@ -19,7 +19,7 @@ const Answers = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/questions");
+        const response = await axios.get("https://poster-adbackend.vercel.app/api/questions");
         setQuestions(response.data);
       } catch (error) {
         console.error("Erro ao buscar as perguntas:", error);
@@ -33,7 +33,7 @@ const Answers = () => {
   const handleUpdateAnswer = async (id) => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/questions/${id}`,
+        `https://poster-adbackend.vercel.app/api/questions/${id}`,
         {
           answer: newAnswer,
         }

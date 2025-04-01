@@ -57,7 +57,7 @@ const Home = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/questions", {
+      const response = await axios.post("https://poster-adbackend.vercel.app/api/questions", {
         question,
       });
       setMessage(response.data.message);
