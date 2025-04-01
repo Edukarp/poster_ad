@@ -24,7 +24,7 @@ const Home = () => {
       if (token) {
         try {
           const response = await axios.get(
-            "http://localhost:5000/api/users/me",
+            "https://poster-adbackend.vercel.app/api/users/me",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
