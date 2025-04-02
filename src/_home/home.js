@@ -57,9 +57,12 @@ const Home = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("https://poster-adbackend.vercel.app/api/questions", {
-        question,
-      });
+      const response = await axios.post(
+        "https://poster-adbackend.vercel.app/api/questions",
+        {
+          question,
+        }
+      );
       setMessage(response.data.message);
       setQuestion("");
       if (textareaRef.current) {
@@ -147,17 +150,17 @@ const Home = () => {
               </div>
               <p className="topic-title">DISPONIVEL EM:</p>
               <div className="logos-container">
-                <a
-                  href="https://play.max.com/movie/68b16b1a-fee0-48b2-886f-39f51832725d?utm_source=universal_search"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    className="logo-image"
-                    src="/max_logo.png"
-                    alt="Logo da MAX"
-                  />
-                </a>
+                  <a
+                    href="https://play.max.com/movie/68b16b1a-fee0-48b2-886f-39f51832725d?utm_source=universal_search"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      className="logo-image"
+                      src="/max_logo.png"
+                      alt="Logo da MAX"
+                    />
+                  </a>
                 <a
                   href="https://www.primevideo.com/dp/amzn1.dv.gti.ce3a3b69-10a1-4bfc-8459-1b48bce3a53e?autoplay=0&ref_=atv_cf_strg_wb"
                   target="_blank"

@@ -5,6 +5,7 @@ html body {
   font-weight: 400; /* normal */
   font-style: normal;
   font-size: 22px;
+  overflow: hidden;
 }
 
 .background {
@@ -34,6 +35,9 @@ html body {
   top: 50px;
   right: 100px;
   z-index: 10;
+  background-color: rgba(115,14,22,0.5);
+  padding: 0px 10px 10px 10px;
+  border-radius: 15px;
 }
 
 .login-home-button {
@@ -168,6 +172,10 @@ html body {
   gap: 20px;
   margin-top: 25px;
   justify-content: center;
+  align-items: center;
+  z-index: 10;
+  pointer-events: auto;
+
 }
 
 .logo-image {
@@ -175,12 +183,16 @@ html body {
   height: auto;
   object-fit: contain;
   cursor: pointer;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .logos-container a {
   text-decoration: none;
   color: inherit;
   display: flex;
+  z-index: 10;
+  pointer-events: auto;
 }
 
 .question-container {
@@ -208,7 +220,7 @@ html body {
   border: solid #730e16 1px;
   background-color: #730e16;
   border-radius: 15px;
-  width: 28%;
+  width: 315px;
   text-align: center;
   display: block;
 }
